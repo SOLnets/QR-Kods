@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="lv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Kodu Ģenerators</title>
+    <meta
+      name="description"
+      content="Ģenerē QR kodus ar iespēju pievienot logo vai attēlu centrā."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-bg" aria-hidden="true"></div>
+    <main class="layout">
+      <header class="hero">
+        <h1>QR Kodu Ģenerators</h1>
+        <p class="hero-copy">
+          Izveido QR kodu no teksta vai URL, pievieno logo centrā un lejupielādē
+          rezultātu PNG vai SVG formātā.
+        </p>
+      </header>
+
+      <section class="app-card" aria-label="QR ģenerēšanas rīks">
+        <form id="qr-form" class="controls" novalidate>
+          <div class="field-group">
+            <label for="content">Saturs (teksts vai URL)</label>
+            <textarea
+              id="content"
+              name="content"
+              rows="4"
+              placeholder="Piemērs: https://example.com"
+              required
+            ></textarea>
+          </div>
+
+          <div class="grid-2">
+            <div class="field-group">
+              <label for="size">QR izmērs (px)</label>
+              <input id="size" name="size" type="number" min="128" max="1000" step="8" value="320" />
+            </div>
+            <div class="field-group">
+              <label for="margin">Rāmis (px)</label>
+              <input id="margin" name="margin" type="number" min="0" max="32" step="1" value="8" />
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="field-group">
+              <label for="foreground">Priekšplāna krāsa</label>
+              <input id="foreground" name="foreground" type="color" value="#111827" />
+            </div>
+            <div class="field-group">
+              <label for="background">Fona krāsa</label>
+              <input id="background" name="background" type="color" value="#ffffff" />
+            </div>
+          </div>
+
+          <fieldset class="logo-fieldset">
+            <legend>Logo centrā</legend>
+            <div class="field-group">
+              <label for="logoFile">Augšupielādēt logo</label>
+              <input
+                id="logoFile"
+                name="logoFile"
+                type="file"
+                accept=".png,.jpg,.jpeg,.svg,.webp,image/png,image/jpeg,image/svg+xml,image/webp"
+              />
+            </div>
+            <div class="field-group">
+              <label for="logoSize">Logo izmērs (% no QR)</label>
+              <div class="range-row">
+                <input
+                  id="logoSize"
+                  name="logoSize"
+                  type="range"
+                  min="8"
+                  max="28"
+                  step="1"
+                  value="18"
+                />
+                <output id="logoSizeOutput" for="logoSize">18%</output>
+              </div>
+            </div>
+            <button id="removeLogo" type="button" class="button button-ghost">
+              Noņemt logo
+            </button>
+          </fieldset>
+
+          <div class="actions">
+            <button id="downloadPngBtn" class="button button-primary" type="button">Download PNG</button>
+            <button id="downloadSvgBtn" class="button button-secondary" type="button">Download SVG</button>
+            <button id="resetBtn" class="button button-ghost" type="button">Reset</button>
+          </div>
+
+          <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+        </form>
+
+        <section class="preview" aria-label="QR priekšskatījums">
+          <h2>Priekšskatījums</h2>
+          <p id="previewMeta" class="preview-meta"></p>
+          <div id="qrPreview" class="preview-frame">
+            <div id="qrRenderMount" class="qr-render-mount" aria-hidden="true"></div>
+            <canvas id="qrDisplayCanvas" class="qr-display-canvas"></canvas>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/qr-code-styling@1.9.2/lib/qr-code-styling.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
